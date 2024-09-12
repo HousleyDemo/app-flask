@@ -1,17 +1,21 @@
 FROM registry.access.redhat.com/ubi9/python-39:1-117.1684741281
 
-# By default, listen on port 8081
-EXPOSE 8081/tcp
-ENV FLASK_PORT=8081
+# Install any needed packages specified in requirements.txt
+COPY docker/requirements.txt /
+
+RUN pip install -r /requirements.txt
+
 
 # Set the working directory in the container
 WORKDIR /code/project
 
+
 # Copy the content of the local src directory to the working directory
-COPY . /code
+COPY project /code/project
 
-# Install any dependencies
-RUN pip install -r docker/requirements.txt
 
-# Specify the command to run on container start
+
+EXPOSE 8081/tcp
+ENV FLASK_PORT=8081
 CMD [ "python", "./app.py" ]
+
