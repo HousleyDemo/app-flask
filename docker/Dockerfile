@@ -5,13 +5,13 @@ EXPOSE 8081/tcp
 ENV FLASK_PORT=8081
 
 # Set the working directory in the container
-WORKDIR /code
+WORKDIR /code/project
 
 # Copy the content of the local src directory to the working directory
-COPY . .
+COPY . /code
 
 # Install any dependencies
-RUN pip install -r requirements.txt
+RUN pip install -r docker/requirements.txt
 
 # Specify the command to run on container start
 CMD [ "python", "./app.py" ]
